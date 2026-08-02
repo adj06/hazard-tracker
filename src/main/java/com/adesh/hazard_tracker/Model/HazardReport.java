@@ -6,13 +6,13 @@ import jakarta.persistence.*; // JPA needed for database
 @Table(name = "hazard_reports") // naming table in PostgreSQL
 public class HazardReport {
 
-    private long id;
-    private double longitude;
-    private double latitude;
+    private Long id;
+    private Double longitude;
+    private Double latitude;
     private String title;
     private String description;
 
-    public HazardReport(long id, double longitude, double latitude, String title, String description){
+    public HazardReport(Long id, Double longitude, Double latitude, String title, String description){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -20,21 +20,22 @@ public class HazardReport {
         this.latitude = latitude;
     }
 
+    // empty constructor for JPA
     public HazardReport() {
 
     }
 
     @Id // declaring the primary key for db
     @GeneratedValue(strategy = GenerationType.IDENTITY) // automatically generate new sequential number every time there is a new report
-    public long getId(){
+    public Long getId(){
         return id;
     }
 
-    public double getLongitude(){
+    public Double getLongitude(){
         return longitude;
     }
 
-    public double getLatitude(){
+    public Double getLatitude(){
         return latitude;
     }
 
@@ -46,5 +47,24 @@ public class HazardReport {
         return description;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }
