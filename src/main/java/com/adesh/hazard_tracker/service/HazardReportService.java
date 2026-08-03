@@ -26,4 +26,12 @@ public class HazardReportService {
     public HazardReport createHazard(HazardReport report){
         return repository.save(report);
     }
+
+    public HazardReport updateStatus (Long id, String newStatus){
+        HazardReport existingReport = repository.findById(id).orElseThrow(() -> new RuntimeException("Hazard not found with id: " + id));
+
+        existingReport.setStatus(newStatus);
+
+        return repository.save(existingReport);
+    }
 }

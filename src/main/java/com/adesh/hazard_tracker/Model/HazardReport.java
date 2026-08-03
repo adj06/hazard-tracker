@@ -11,6 +11,7 @@ public class HazardReport {
     private Double latitude;
     private String title;
     private String description;
+    private String status = "REPORTED";
 
     public HazardReport(Long id, Double longitude, Double latitude, String title, String description){
         this.id = id;
@@ -66,5 +67,14 @@ public class HazardReport {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 
 }

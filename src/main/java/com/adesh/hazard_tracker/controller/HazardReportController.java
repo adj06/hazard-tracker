@@ -24,4 +24,9 @@ public class HazardReportController {
     public HazardReport createHazard(@RequestBody HazardReport report){ // takes incoming JSON from requests converts to Hazard Report object
         return  service.createHazard(report);
     }
+
+    @PatchMapping("/{id}/status")
+    public HazardReport updateHazardStatus(@PathVariable Long id, @RequestParam String status) {
+        return service.updateStatus(id, status);
+    }
 }
