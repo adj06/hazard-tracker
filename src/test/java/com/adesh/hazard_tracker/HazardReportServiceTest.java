@@ -14,30 +14,44 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import java.util.Optional;
 
+// tells JUnit to enable Mockito for the class
 @ExtendWith(MockitoExtension.class)
 class testStatus {
 
+    // creates test version of repo
     @Mock
     private HazardReportRepository repository;
 
+    //creates service, plugs in test repo
+    // test service without real db
     @InjectMocks
     private HazardReportService service;
 
+    // runnable test method
     @Test
 
     public void testStatusSuccess(){
 
         Long testId = 1L;
 
+        //creating report for test
         HazardReport testReport = new HazardReport();
         testReport.setId(testId);
         testReport.setTitle("Test Hazard");
         testReport.setStatus("REPORTED");
 
+        //returning test report when findById is called
+        //used Optional.of() if findById finds nothing
         when(repository.findById(testId)).thenReturn(Optional.of(testReport));
+
+        //the object passed into save() is returned (same object)
         when(repository.save(any(HazardReport.class))).thenAnswer(i -> i.getArguments()[0]);
 
+        //call method inside service to test
         HazardReport updatedReport = service.updateStatus(testId, "RESOLVED");
+
+        //check if service changed the status of report
+        //pass in expected value and the actual value and message if fail
         assertEquals("RESOLVED", updatedReport.getStatus(), "The status should be successfully updated to RESOLVED");
 
     }
