@@ -29,4 +29,9 @@ public class HazardReportController {
     public HazardReport updateHazardStatus(@PathVariable Long id, @RequestParam String status) {
         return service.updateStatus(id, status);
     }
+
+    //@DeleteMapping
+    //public HazardReport deleteHazardStatus(){
+
+    //}
 }

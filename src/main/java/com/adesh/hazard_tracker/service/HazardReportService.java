@@ -1,6 +1,7 @@
 package com.adesh.hazard_tracker.service;
 
 import com.adesh.hazard_tracker.Model.HazardReport;
+import com.adesh.hazard_tracker.Model.HazardStatus;
 import com.adesh.hazard_tracker.Repository.HazardReportRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +29,17 @@ public class HazardReportService {
     }
 
     public HazardReport updateStatus (Long id, String newStatus){
-        HazardReport existingReport = repository.findById(id).orElseThrow(() -> new RuntimeException("Hazard not found with id: " + id));
-
-        existingReport.setStatus(newStatus);
-
+        HazardReport existingReport = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hazard not found with id: " + id));
+        try {
+            HazardStatus statusEnum = HazardStatus.valueOf(newStatus.toUpperCase());
+            existingReport.setStatus(statusEnum);
+        } catch (IllegalArgumentException e) {
+            //If any other value is passed in then throw exception
+            throw new RuntimeException("You have given an invalid status. Accepted values: REPORTED, SCHEDULED, UNDER_REVIEW, RESOLVED, DISMISSED.");
+        }
         return repository.save(existingReport);
+
+
     }
 }
