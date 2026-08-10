@@ -3,7 +3,9 @@ package com.adesh.hazard_tracker.service;
 import com.adesh.hazard_tracker.Model.HazardReport;
 import com.adesh.hazard_tracker.Model.HazardStatus;
 import com.adesh.hazard_tracker.Repository.HazardReportRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,6 +27,18 @@ public class HazardReportService {
 
     // method to save hazard to db
     public HazardReport createHazard(HazardReport report){
+        boolean isDuplicate = repository.existsByTitleAndLatitudeAndLongitude(
+                report.getTitle(),
+                report.getLatitude(),
+                report.getLongitude()
+        );
+
+        if (isDuplicate) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "hazard with the title already exists at this location"
+            );
+        }
         return repository.save(report);
     }
 

@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 // telling JPA what entity is managed and the primary key
 public interface HazardReportRepository extends JpaRepository<HazardReport, Long> {
 
+    boolean existsByTitleAndLatitudeAndLongitude(String title, Double latitude, Double longitude);
+
 
 }
