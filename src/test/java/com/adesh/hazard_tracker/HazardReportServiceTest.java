@@ -1,7 +1,8 @@
 package com.adesh.hazard_tracker;
 
-import com.adesh.hazard_tracker.Model.HazardReport;
-import com.adesh.hazard_tracker.Repository.HazardReportRepository;
+import com.adesh.hazard_tracker.model.HazardReport;
+import com.adesh.hazard_tracker.model.HazardStatus;
+import com.adesh.hazard_tracker.repository.HazardReportRepository;
 import com.adesh.hazard_tracker.service.HazardReportService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +39,7 @@ class testStatus {
         HazardReport testReport = new HazardReport();
         testReport.setId(testId);
         testReport.setTitle("Test Hazard");
-        testReport.setStatus("REPORTED");
+        testReport.setStatus(HazardStatus.valueOf("REPORTED"));
 
         //returning test report when findById is called
         //used Optional.of() if findById finds nothing
@@ -52,7 +53,7 @@ class testStatus {
 
         //check if service changed the status of report
         //pass in expected value and the actual value and message if fail
-        assertEquals("RESOLVED", updatedReport.getStatus(), "The status should be successfully updated to RESOLVED");
+        assertEquals(HazardStatus.RESOLVED, updatedReport.getStatus());
 
     }
 

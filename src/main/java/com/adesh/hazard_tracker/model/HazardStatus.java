@@ -1,4 +1,4 @@
-package com.adesh.hazard_tracker.Model;
+package com.adesh.hazard_tracker.model;
 
 public enum HazardStatus {
 

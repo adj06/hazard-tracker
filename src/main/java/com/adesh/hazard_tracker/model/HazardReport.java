@@ -1,4 +1,4 @@
-package com.adesh.hazard_tracker.Model;
+package com.adesh.hazard_tracker.model;
 
 import jakarta.persistence.*; // JPA needed for database
 
@@ -8,7 +8,8 @@ public class HazardReport {
 
 
     @Id // declaring the primary key for db
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // automatically generate new sequential number every time there is a new report
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // automatically generate new sequential number every time there is a new report
     private Long id;
     private Double longitude;
     private Double latitude;

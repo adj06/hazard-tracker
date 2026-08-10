@@ -1,8 +1,8 @@
 package com.adesh.hazard_tracker.service;
 
-import com.adesh.hazard_tracker.Model.HazardReport;
-import com.adesh.hazard_tracker.Model.HazardStatus;
-import com.adesh.hazard_tracker.Repository.HazardReportRepository;
+import com.adesh.hazard_tracker.model.HazardReport;
+import com.adesh.hazard_tracker.model.HazardStatus;
+import com.adesh.hazard_tracker.repository.HazardReportRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
