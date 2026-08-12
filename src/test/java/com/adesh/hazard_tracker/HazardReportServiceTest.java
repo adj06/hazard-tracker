@@ -38,7 +38,7 @@ class testStatus {
         //creating report for test
         HazardReport testReport = new HazardReport();
         testReport.setId(testId);
-        testReport.setTitle("Test Hazard");
+        // testReport.getType();
         testReport.setStatus(HazardStatus.valueOf("REPORTED"));
 
         //returning test report when findById is called

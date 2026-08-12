@@ -2,6 +2,7 @@ package com.adesh.hazard_tracker.model;
 
 import jakarta.persistence.*; // JPA needed for database
 
+
 @Entity // Class represents the table in database
 @Table(name = "hazard_reports") // naming table in PostgreSQL
 public class HazardReport {
@@ -13,15 +14,17 @@ public class HazardReport {
     private Long id;
     private Double longitude;
     private Double latitude;
-    private String title;
+
+    @Enumerated(EnumType.STRING)
+    private HazardType type;
+
     private String description;
 
     @Enumerated(EnumType.STRING)
     private HazardStatus status = HazardStatus.REPORTED;
 
-    public HazardReport(Long id, Double longitude, Double latitude, String title, String description){
+    public HazardReport(Long id, Double longitude, Double latitude, String description){
         this.id = id;
-        this.title = title;
         this.description = description;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -35,6 +38,7 @@ public class HazardReport {
         return id;
     }
     public void setId(Long id) {
+
         this.id = id;
     }
 
@@ -52,12 +56,6 @@ public class HazardReport {
         this.latitude = latitude;
     }
 
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getDescription() {
         return description;
@@ -72,6 +70,15 @@ public class HazardReport {
     }
     public void setStatus(HazardStatus status) {
         this.status = status;
+    }
+
+    public HazardType getType() {
+        return type;
+    }
+
+    public HazardType setType(){
+        this.type = type;
+        return null;
     }
 
 

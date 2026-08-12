@@ -27,8 +27,7 @@ public class HazardReportService {
 
     // method to save hazard to db
     public HazardReport createHazard(HazardReport report){
-        boolean isDuplicate = repository.existsByTitleAndLatitudeAndLongitude(
-                report.getTitle(),
+        boolean isDuplicate = repository.existsByLatitudeAndLongitude(
                 report.getLatitude(),
                 report.getLongitude()
         );
