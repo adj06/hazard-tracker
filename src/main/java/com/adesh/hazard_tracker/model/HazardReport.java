@@ -1,6 +1,7 @@
 package com.adesh.hazard_tracker.model;
 
 import jakarta.persistence.*; // JPA needed for database
+import jakarta.validation.constraints.*;
 
 
 @Entity // Class represents the table in database
@@ -12,22 +13,33 @@ public class HazardReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // automatically generate new sequential number every time there is a new report
     private Long id;
+
+    @NotNull(message = "Longitude can't be null")
+    @DecimalMin("-180.0")
+    @DecimalMax("180.0")
     private Double longitude;
+
+    @NotNull(message = "Latitude can't be null")
+    @DecimalMin("-90.0")
+    @DecimalMax("90.0")
     private Double latitude;
 
+    @NotNull(message = "Hazard type can't be null")
     @Enumerated(EnumType.STRING)
     private HazardType type;
 
+    @NotBlank(message = "description can't be blank")
     private String description;
 
     @Enumerated(EnumType.STRING)
     private HazardStatus status = HazardStatus.REPORTED;
 
-    public HazardReport(Long id, Double longitude, Double latitude, String description){
+    public HazardReport(Long id, Double longitude, Double latitude, HazardType type, String description) {
         this.id = id;
-        this.description = description;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.type = type;
+        this.description = description;
     }
 
     // empty constructor for JPA

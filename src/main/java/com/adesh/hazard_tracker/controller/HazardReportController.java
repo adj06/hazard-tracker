@@ -2,6 +2,7 @@ package com.adesh.hazard_tracker.controller;
 import com.adesh.hazard_tracker.model.HazardReport;
 import com.adesh.hazard_tracker.repository.HazardReportRepository;
 import com.adesh.hazard_tracker.service.HazardReportService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class HazardReportController {
     }
 
     @PostMapping// map HTTP POST requests to createHazard method
-    public HazardReport createHazard(@RequestBody HazardReport report){ // takes incoming JSON from requests converts to Hazard Report object
-        return  service.createHazard(report);
+    public HazardReport createHazard(@Valid @RequestBody HazardReport report){ // takes incoming JSON from requests converts to Hazard Report object
+        return service.createHazard(report);
     }
 
     @PatchMapping("/{id}/status")
