@@ -27,16 +27,10 @@ public class HazardReportService {
 
     // method to save hazard to db
     public HazardReport createHazard(HazardReport report){
-        boolean isDuplicate = repository.existsByLatitudeAndLongitude(
-                report.getLatitude(),
-                report.getLongitude()
-        );
+        boolean isDuplicate = repository.existsByTypeAndLatitudeAndLongitude(report.getType(), report.getLatitude(), report.getLongitude());
 
         if (isDuplicate) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "hazard with the title already exists at this location"
-            );
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "hazard with the title already exists at this location");
         }
         return repository.save(report);
     }

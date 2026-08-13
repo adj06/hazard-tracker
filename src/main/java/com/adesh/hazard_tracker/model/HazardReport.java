@@ -38,7 +38,6 @@ public class HazardReport {
         return id;
     }
     public void setId(Long id) {
-
         this.id = id;
     }
 
@@ -76,9 +75,8 @@ public class HazardReport {
         return type;
     }
 
-    public HazardType setType(){
+    public void setType(HazardType type){
         this.type = type;
-        return null;
     }
 
 

@@ -1,6 +1,7 @@
 package com.adesh.hazard_tracker.repository;
 
 import com.adesh.hazard_tracker.model.HazardReport;
+import com.adesh.hazard_tracker.model.HazardType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 // telling JPA what entity is managed and the primary key
 public interface HazardReportRepository extends JpaRepository<HazardReport, Long> {
 
-    boolean existsByLatitudeAndLongitude(Double latitude, Double longitude);
+    boolean existsByTypeAndLatitudeAndLongitude(HazardType type, Double latitude, Double longitude);
 
 
 }
