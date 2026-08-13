@@ -1,7 +1,7 @@
 package com.adesh.hazard_tracker.model;
 
 import jakarta.persistence.*; // JPA needed for database
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.*; // validation library
 
 
 @Entity // Class represents the table in database
@@ -14,14 +14,15 @@ public class HazardReport {
     // automatically generate new sequential number every time there is a new report
     private Long id;
 
+    //annotations for validation
     @NotNull(message = "Longitude can't be null")
-    @DecimalMin("-180.0")
-    @DecimalMax("180.0")
+    @DecimalMin(value = "-180.0", message = "Longitude has to be a minimum of -180.0")
+    @DecimalMax(value = "180.0", message = "Longitude has to be a maximum of 180.0")
     private Double longitude;
 
     @NotNull(message = "Latitude can't be null")
-    @DecimalMin("-90.0")
-    @DecimalMax("90.0")
+    @DecimalMin(value = "-90", message = "Latitude has to be a minimum of -90.0")
+    @DecimalMax(value ="-90", message = "Latitude has to be a maximum of 90.0")
     private Double latitude;
 
     @NotNull(message = "Hazard type can't be null")

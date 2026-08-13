@@ -27,26 +27,27 @@ public class HazardReportService {
 
     // method to save hazard to db
     public HazardReport createHazard(HazardReport report){
-        boolean isDuplicate = repository.existsByTypeAndLatitudeAndLongitude(report.getType(), report.getLatitude(), report.getLongitude());
+        boolean duplicate = repository.existsByTypeAndLatitudeAndLongitude(report.getType(), report.getLatitude(), report.getLongitude());
 
-        if (isDuplicate) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "hazard with the title already exists at this location");
+        if (duplicate){
+            throw new IllegalArgumentException("There's already a hazard of the type that exists at the location");
         }
         return repository.save(report);
     }
 
     public HazardReport updateStatus (Long id, String newStatus){
-        HazardReport existingReport = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Hazard not found with id: " + id));
-        try {
-            HazardStatus statusEnum = HazardStatus.valueOf(newStatus.toUpperCase());
-            existingReport.setStatus(statusEnum);
-        } catch (IllegalArgumentException e) {
-            //If any other value is passed in then throw exception
-            throw new RuntimeException("You have given an invalid status. Accepted values: REPORTED, SCHEDULED, UNDER_REVIEW, RESOLVED, DISMISSED.");
-        }
-        return repository.save(existingReport);
 
+        HazardReport report = repository.findById(id).orElseThrow(() -> new RuntimeException("Hazard not found with id: " + id));
+        HazardStatus status;
+
+        try {
+            status = HazardStatus.valueOf(newStatus.toUpperCase());
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid hazard status: " + newStatus);
+        }
+
+        report.setStatus(status);
+        return repository.save(report);
 
     }
 }
