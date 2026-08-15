@@ -39,7 +39,7 @@ class testStatus {
         HazardReport testReport = new HazardReport();
         testReport.setId(testId);
         // testReport.getType();
-        testReport.setStatus(HazardStatus.valueOf("REPORTED"));
+        testReport.setStatus(HazardStatus.REPORTED);
 
         //returning test report when findById is called
         //used Optional.of() if findById finds nothing
@@ -49,7 +49,7 @@ class testStatus {
         when(repository.save(any(HazardReport.class))).thenAnswer(i -> i.getArguments()[0]);
 
         //call method inside service to test
-        HazardReport updatedReport = service.updateStatus(testId, "RESOLVED");
+        HazardReport updatedReport = service.updateStatus(testId, HazardStatus.RESOLVED);
 
         //check if service changed the status of report
         //pass in expected value and the actual value and message if fail

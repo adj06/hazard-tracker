@@ -3,9 +3,7 @@ package com.adesh.hazard_tracker.service;
 import com.adesh.hazard_tracker.model.HazardReport;
 import com.adesh.hazard_tracker.model.HazardStatus;
 import com.adesh.hazard_tracker.repository.HazardReportRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -35,19 +33,15 @@ public class HazardReportService {
         return repository.save(report);
     }
 
-    public HazardReport updateStatus (Long id, String newStatus){
+    public HazardReport updateStatus(Long id, HazardStatus newStatus) {
 
-        HazardReport report = repository.findById(id).orElseThrow(() -> new RuntimeException("Hazard not found with id: " + id));
-        HazardStatus status;
+        HazardReport report = repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Hazard not found with id: " + id)
+                );
 
-        try {
-            status = HazardStatus.valueOf(newStatus.toUpperCase());
-        } catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("Invalid hazard status: " + newStatus);
-        }
+        report.setStatus(newStatus);
 
-        report.setStatus(status);
         return repository.save(report);
-
     }
 }

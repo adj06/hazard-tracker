@@ -1,5 +1,6 @@
 package com.adesh.hazard_tracker.controller;
 import com.adesh.hazard_tracker.model.HazardReport;
+import com.adesh.hazard_tracker.model.HazardStatus;
 import com.adesh.hazard_tracker.repository.HazardReportRepository;
 import com.adesh.hazard_tracker.service.HazardReportService;
 import jakarta.validation.Valid;
@@ -27,7 +28,7 @@ public class HazardReportController {
     }
 
     @PatchMapping("/{id}/status")
-    public HazardReport updateHazardStatus(@PathVariable Long id, @RequestParam String status) {
+    public HazardReport updateHazardStatus(@PathVariable Long id, @RequestParam HazardStatus status) {
         return service.updateStatus(id, status);
     }
 
