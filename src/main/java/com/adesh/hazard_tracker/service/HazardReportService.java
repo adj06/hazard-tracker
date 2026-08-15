@@ -44,4 +44,10 @@ public class HazardReportService {
 
         return repository.save(report);
     }
-}
+
+    public HazardReport getHazardById(Long id) {
+
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Hazard not found with id: " + id));
+        };
+    }
+

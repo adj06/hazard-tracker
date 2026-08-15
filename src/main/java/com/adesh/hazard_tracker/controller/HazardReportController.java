@@ -22,6 +22,11 @@ public class HazardReportController {
         return service.getHazards();
     }
 
+    @GetMapping("/{id}")
+    public HazardReport getHazardById(@PathVariable Long id) {
+        return service.getHazardById(id);
+    }
+
     @PostMapping// map HTTP POST requests to createHazard method
     public HazardReport createHazard(@Valid @RequestBody HazardReport report){ // takes incoming JSON from requests converts to Hazard Report object
         return service.createHazard(report);
