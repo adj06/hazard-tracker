@@ -3,6 +3,7 @@ package com.adesh.hazard_tracker.model;
 import jakarta.persistence.*; // JPA needed for database
 import jakarta.validation.constraints.*; // validation library
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.LocalDateTime;
 
 
 @Entity // Class represents the table in database
@@ -27,6 +28,11 @@ public class HazardReport {
     @DecimalMax(value = "90", message = "Latitude has to be a maximum of 90.0")
     private Double latitude;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDateTime reportedTime;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDateTime updatedTime;
+
     @NotNull(message = "Hazard type can't be null")
     @Enumerated(EnumType.STRING)
     private HazardType type;
@@ -42,11 +48,13 @@ public class HazardReport {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private HazardStatus status = HazardStatus.REPORTED;
 
-    public HazardReport(Long id, Double longitude, Double latitude, HazardType type, String description) {
+    public HazardReport(Long id, Double longitude, Double latitude, HazardType type, HazardSeverity severity, HazardStatus status, String description) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
         this.type = type;
+        this.severity = severity;
+        this.status = status;
         this.description = description;
     }
 
@@ -103,6 +111,25 @@ public class HazardReport {
 
     public void setType(HazardType type){
         this.type = type;
+    }
+
+    public LocalDateTime getReportedTime(){
+        return reportedTime;
+    }
+
+    public LocalDateTime getUpdatedTime(){
+        return updatedTime;
+    }
+
+    @PrePersist //method ran before entity is put in db
+    private void create(){
+        reportedTime = LocalDateTime.now();
+        updatedTime = LocalDateTime.now();
+    }
+
+    @PreUpdate //method ran straight away before entity updated in db
+    private void update(){
+        updatedTime = LocalDateTime.now();
     }
 
 

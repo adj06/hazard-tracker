@@ -17,7 +17,7 @@ import java.util.Optional;
 
 // tells JUnit to enable Mockito for the class
 @ExtendWith(MockitoExtension.class)
-class testStatus {
+class HazardReportServiceTest {
 
     // creates test version of repo
     @Mock
