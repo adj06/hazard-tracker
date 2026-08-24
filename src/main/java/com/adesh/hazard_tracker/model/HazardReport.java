@@ -31,6 +31,10 @@ public class HazardReport {
     @Enumerated(EnumType.STRING)
     private HazardType type;
 
+    @NotNull(message = "Hazard severity can't be null")
+    @Enumerated(EnumType.STRING)
+    private HazardSeverity severity;
+
     @NotBlank(message = "description can't be blank")
     private String description;
 
@@ -71,7 +75,6 @@ public class HazardReport {
         this.latitude = latitude;
     }
 
-
     public String getDescription() {
         return description;
     }
@@ -85,6 +88,13 @@ public class HazardReport {
     }
     public void setStatus(HazardStatus status) {
         this.status = status;
+    }
+
+    public HazardSeverity getSeverity() {
+        return severity;
+    }
+    public void setSeverity(HazardSeverity severity){
+        this.severity = severity;
     }
 
     public HazardType getType() {

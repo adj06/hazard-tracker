@@ -37,8 +37,7 @@ public class HazardReportController {
         return service.updateStatus(id, status);
     }
 
-    //@DeleteMapping
-    //public HazardReport deleteHazardStatus(){
-
-    //}
+    /*@DeleteMapping
+    public HazardReport deleteHazardStatus(){
+    }*/
 }
