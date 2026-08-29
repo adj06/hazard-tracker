@@ -12,44 +12,81 @@ I made sure to build my API in a way a professional software engineer would. I f
 * **Containerisation:** Docker
 * **Documentation:** Swagger
 
-## The function of the application
+## Features
+### Management
+* Create hazard reports
+* Retrieve all hazards
+* Retrieve a hazard by its ID
+* Update status of a hazard
+* Validation for required fields
+* Prevent duplicate hazards from being reported at the same location
+* Record when a hazard was reported and last updated
 
-* **CRUD:** Create, view, update, and delete hazard reports from db.
-* **Status updates:** Able to change the status of a hazard as it gets worked on (changing the status from "REPORTED" to "RESOLVED")
-* **Testing:** I wrote automated tests using mock databases which makes sure my logic works the way intended without accidentally ruining data.
-* **Preloaded data:** When my app starts, it injects sample hazards into the database so you can start testing straight away.
+### Classification
+* Type - pothole, flooding, broken streetlight, etc.
+* Severity - low, medium, high, or urgent
+* Status - reported, scheduled, under review, resolved, or dismissed
+* GPS coordinates
+* Description
+* Reported/Updated times
 
-## How to run the project
+### Testing
 
-1. **Download my code:**
-   ```bash
-   git clone [https://github.com/adj06/hazard-tracker.git](https://github.com/adj06/hazard-tracker.git)
-    ```
-2. **Build the container**
-    ```bash
-    docker build -t hazard-tracker .
-   ```
+I used JUnit 5 and Mockito to test the business logic of the API.
 
-3. **Start the application**
-    ```bash
-    docker run -p 8080:8080 \
-    -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/hazard_db \
-    -e SPRING_DATASOURCE_USERNAME=postgres \
-    -e SPRING_DATASOURCE_PASSWORD="Password" \
-    hazard-tracker
-    ```
+Repository layer is mocked in the unit tests which allows the service layer to be tested without connecting to the live database.
+
+My tests cover:
+
+* Hazards being created successfully
+* Duplicate hazards being rejected
+* Hazard status updates
+* Handling hazard IDs which don't exist
+
+### API Documentation
+
+I used Swagger UI which provided me with interactive API documentations to test my endpoints straight from a browser.
+
+### Preloaded Data 
+
+There are sample hazard reports loaded into my PostgreSQL database when the application starts which allowed me to test the API straight away.
+
+## Architecture
+
+Application follows typical REST API structure using controller, dto, service, and repository layers.
+
+Controller: Handles the HTTP requests and responses.
+DTO: Separates API request and response data from the entities in the database.
+Service: Business logic for the application such as detection for duplicates and updating status.
+Repository: Spring JPA communication with database.
    
-## What I learnt
+## What I learned
 
-This was my first ever Spring Boot and REST API project which was quite a big step up from my usual university projects. It really helped me understand what is expected in industry and helped me gain a lot of knowledge on backend system architecture.
+This was my first Spring Boot and REST API project and was quite a bit of a step up from my usual university projects. It really helped me understand how backend applications are structures and gave me practical experience with the technology used in backed software engineering.
 
-My biggest takeaways from this project include:
+### RESTful API Development
 
-* **Building a RESTful API from scratch:** I learned how to handle HTTP requests, design working endpoints, and separate my code into a Controller layer, a Service layer, and a Repository layer to make sure my data was managed efficiently.
-* **Containerisation:** It made me realise why Docker is used in industry throughout major projects. It is crucial to wrap the application and the environment into a deployable image which is able to run on any machine.
-* **Testing with Mockito:** I learned how to properly test the business logic by mocking the database layer. I realised you don't need a live db connection in order to test the functionality and made sure to write fast and robust unit tests.
-* **API documentation:** I used Swagger UI which was able to make the API look like a real webpage. It made it easy to test my endpoints which made me realise the backend part is only half of it.
-* **Choosing manual code over Lombok:** I knew a tool that I could use called Lombok which would automatically generate repetitive code such as getters, setters, and constructors. However, it was my first project and wanted to write it all out myself which for me personally helped to make the code readable and understandable.
+How to design REST endpoints and how to handle different HTTP requests using Spring Boot. I also learned how to separate different responsibilities between the Controller, Service, and Repository layers.
+
+### DTOs
+
+Using request and response DTOs helped separate API data from database entity.
+
+### Database persistence
+
+Retrieving Java objects from a relational database with the use of Spring Data JPA, Hibernate, and PostgreSQL.
+
+### Testing 
+
+Mocking the repository which allowed me to test the service layer without touching the database. Making efficient and reliable unit tests for key functionality.
+
+## API Documentation
+
+Swagger provided me with an interactive testing interface which allowed me to test the API and made the endpoints easeier to understand and use.
+
+## Java
+
+While researching the technology stack, I came across quite a useful Java library called Lombok which uses annotations to automatically generate repetitive code like getters, setters, and constructors. I made sure not to use Lombok as writing the code manually made it easier for me to understand the structure of my application and how each component connects together.
 
 ## What to do next
 
