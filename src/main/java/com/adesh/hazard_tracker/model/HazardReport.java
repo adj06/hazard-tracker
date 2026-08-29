@@ -2,7 +2,6 @@ package com.adesh.hazard_tracker.model;
 
 import jakarta.persistence.*; // JPA needed for database
 import jakarta.validation.constraints.*; // validation library
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 
@@ -10,10 +9,8 @@ import java.time.LocalDateTime;
 @Table(name = "hazard_reports") // naming table in PostgreSQL
 public class HazardReport {
 
-
     @Id // declaring the primary key for db
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     // automatically generate new sequential number every time there is a new report
     private Long id;
 
@@ -28,9 +25,7 @@ public class HazardReport {
     @DecimalMax(value = "90", message = "Latitude has to be a maximum of 90.0")
     private Double latitude;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime reportedTime;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime updatedTime;
 
     @NotNull(message = "Hazard type can't be null")
@@ -45,7 +40,6 @@ public class HazardReport {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private HazardStatus status = HazardStatus.REPORTED;
 
     public HazardReport(Long id, Double longitude, Double latitude, HazardType type, HazardSeverity severity, HazardStatus status, String description) {
