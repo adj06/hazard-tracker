@@ -27,7 +27,7 @@ public class HazardReportService {
     }
 
     // method to save hazard to db
-    public HazardReportResponse createHazard(@org.jetbrains.annotations.UnknownNullability @Valid HazardReportRequest request) {
+    public HazardReportResponse createHazard(@Valid HazardReportRequest request) {
 
         boolean duplicate = repository.existsByTypeAndLatitudeAndLongitude(request.getType(), request.getLatitude(), request.getLongitude());
 
