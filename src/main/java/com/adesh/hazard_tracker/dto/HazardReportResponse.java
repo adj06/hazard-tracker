@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 
 public class HazardReportResponse {
 
-    private Long id;
-    private Double longitude;
-    private Double latitude;
-    private HazardType type;
-    private HazardSeverity severity;
-    private String description;
-    private HazardStatus status;
-    private LocalDateTime reportedTime;
-    private LocalDateTime updatedTime;
+    private final Long id;
+    private final Double longitude;
+    private final Double latitude;
+    private final HazardType type;
+    private final HazardSeverity severity;
+    private final String description;
+    private final HazardStatus status;
+    private final LocalDateTime reportedTime;
+    private final LocalDateTime updatedTime;
 
     public HazardReportResponse(Long id, Double longitude, Double latitude, HazardType type, HazardSeverity severity, String description, HazardStatus status, LocalDateTime reportedTime, LocalDateTime updatedTime){
         this.id = id;
@@ -58,11 +58,4 @@ public class HazardReportResponse {
         return status;
     }
 
-    public LocalDateTime getReportedTime() {
-        return reportedTime;
-    }
-
-    public LocalDateTime getUpdatedTime() {
-        return updatedTime;
-    }
 }

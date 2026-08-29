@@ -2,7 +2,6 @@ package com.adesh.hazard_tracker.controller;
 import com.adesh.hazard_tracker.dto.HazardReportRequest;
 import com.adesh.hazard_tracker.dto.HazardReportResponse;
 import com.adesh.hazard_tracker.model.HazardStatus;
-import com.adesh.hazard_tracker.repository.HazardReportRepository;
 import com.adesh.hazard_tracker.service.HazardReportService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
