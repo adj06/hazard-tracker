@@ -1,5 +1,6 @@
 package com.adesh.hazard_tracker.controller;
-import com.adesh.hazard_tracker.model.HazardReport;
+import com.adesh.hazard_tracker.dto.HazardReportRequest;
+import com.adesh.hazard_tracker.dto.HazardReportResponse;
 import com.adesh.hazard_tracker.model.HazardStatus;
 import com.adesh.hazard_tracker.repository.HazardReportRepository;
 import com.adesh.hazard_tracker.service.HazardReportService;
@@ -13,27 +14,27 @@ public class HazardReportController {
 
     private final HazardReportService service;
 
-    public HazardReportController(HazardReportRepository repository, HazardReportService service) {
+    public HazardReportController(HazardReportService service) {
         this.service = service;
     }
 
     @GetMapping // maps HTTP GET requests to getHazards method
-    public List<HazardReport> getHazards(){
+    public List<HazardReportResponse> getHazards(){
         return service.getHazards();
     }
 
     @GetMapping("/{id}")
-    public HazardReport getHazardById(@PathVariable Long id) {
+    public HazardReportResponse getHazardById(@PathVariable Long id) {
         return service.getHazardById(id);
     }
 
     @PostMapping// map HTTP POST requests to createHazard method
-    public HazardReport createHazard(@Valid @RequestBody HazardReport report){ // takes incoming JSON from requests converts to Hazard Report object
-        return service.createHazard(report);
+    public HazardReportResponse createHazard(@Valid @RequestBody HazardReportRequest request){ // takes incoming JSON from requests converts to Hazard Report object
+        return service.createHazard(request);
     }
 
     @PatchMapping("/{id}/status")
-    public HazardReport updateHazardStatus(@PathVariable Long id, @RequestParam HazardStatus status) {
+    public HazardReportResponse updateHazardStatus(@PathVariable Long id, @RequestParam HazardStatus status) {
         return service.updateStatus(id, status);
     }
 

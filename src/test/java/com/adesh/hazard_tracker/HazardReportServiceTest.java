@@ -1,5 +1,7 @@
 package com.adesh.hazard_tracker;
 
+import com.adesh.hazard_tracker.dto.HazardReportRequest;
+import com.adesh.hazard_tracker.dto.HazardReportResponse;
 import com.adesh.hazard_tracker.model.HazardReport;
 import com.adesh.hazard_tracker.model.HazardSeverity;
 import com.adesh.hazard_tracker.model.HazardStatus;
@@ -51,11 +53,12 @@ class HazardReportServiceTest {
         when(repository.save(any(HazardReport.class))).thenAnswer(i -> i.getArguments()[0]);
 
         //call method inside service to test
-        HazardReport updatedReport = service.updateStatus(testId, HazardStatus.RESOLVED);
+        HazardReportResponse updatedReport = service.updateStatus(testId, HazardStatus.RESOLVED);
 
         //check if service changed the status of report
         //pass in expected value and the actual value and message if fail
         assertEquals(HazardStatus.RESOLVED, updatedReport.getStatus());
+        assertEquals(HazardStatus.RESOLVED, testReport.getStatus());
 
     }
 
@@ -92,20 +95,53 @@ class HazardReportServiceTest {
     @Test
     void testRejectDuplicate(){
 
-        HazardReport testReport = new HazardReport();
+        HazardReportRequest testRequest = new HazardReportRequest();
 
-        testReport.setType(HazardType.POTHOLE);
-        testReport.setSeverity(HazardSeverity.HIGH);
-        testReport.setLatitude(51.5074);
-        testReport.setLongitude(-0.1278);
-        testReport.setDescription("Large pothole");
+        testRequest.setType(HazardType.POTHOLE);
+        testRequest.setSeverity(HazardSeverity.HIGH);
+        testRequest.setLatitude(51.5074);
+        testRequest.setLongitude(-0.1278);
+        testRequest.setDescription("Large pothole");
 
         //return true when hazard with same type and location exist
         when(repository.existsByTypeAndLatitudeAndLongitude(HazardType.POTHOLE, 51.5074,-0.1278)).thenReturn(true);
         //check service rejects duplicate hazard
-        assertThrows(IllegalArgumentException.class,() -> service.createHazard(testReport));
+        assertThrows(IllegalArgumentException.class,() -> service.createHazard(testRequest));
         //verify duplicate hazard wasn't saved
         verify(repository, never()).save(any(HazardReport.class));
     }
+
+    @Test
+    void testCreateHazard(){
+
+        HazardReportRequest testRequest = new HazardReportRequest();
+
+        testRequest.setType(HazardType.POTHOLE);
+        testRequest.setSeverity(HazardSeverity.HIGH);
+        testRequest.setLatitude(51.5074);
+        testRequest.setLongitude(-0.1278);
+        testRequest.setDescription("Large pothole");
+
+        when(repository.save(any(HazardReport.class))).thenAnswer(i-> {
+            HazardReport report = i.getArgument(0);
+            report.setId(1L);
+            return report;
+        });
+
+        HazardReportResponse response = service.createHazard(testRequest);
+
+        assertEquals(1L, response.getId());
+        assertEquals(HazardType.POTHOLE, response.getType());
+        assertEquals(HazardSeverity.HIGH, response.getSeverity());
+        assertEquals(51.5074, response.getLatitude());
+        assertEquals(-0.1278, response.getLongitude());
+        assertEquals("Large pothole", response.getDescription());
+
+        verify(repository).save(any(HazardReport.class));
+
+
+    }
+
+
 
 }
