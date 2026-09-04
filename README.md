@@ -80,6 +80,16 @@ Retrieving Java objects from a relational database with the use of Spring Data J
 
 Mocking the repository which allowed me to test the service layer without touching the database. Making efficient and reliable unit tests for key functionality.
 
+### Test Coverage 
+
+I used **JaCoCo** to measure automated test coverage.
+
+* **79% line coverage**
+* **100% branch coverage**
+* **75% instruction coverage**
+* **76% method coverage**
+* **100% class coverage**
+
 ## API Documentation
 
 Swagger provided me with an interactive testing interface which allowed me to test the API and made the endpoints easeier to understand and use.
